@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<section class="hero">
+  <div class="container text-center">
+    <span class="badge rounded-pill hero-badge mb-3">Secure Coding Project</span>
+    <h1 class="display-4 fw-bold">Your Education. Your Data. Our Security.</h1>
+    <p class="lead mx-auto hero-lead">
+      SecurePortal is a student registration and login system built to show how common
+      web vulnerabilities are prevented with careful, defensive coding.
+    </p>
+    <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+      <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg rounded-pill px-4">Register</a>
+      <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg rounded-pill px-4">Login</a>
+    </div>
+  </div>
+</section>
+
+<section id="features" class="py-5">
+  <div class="container">
+    <h2 class="section-title text-center">Security Features</h2>
+    <p class="text-center text-muted mb-5">Every layer of the application is built with security in mind.</p>
+    <div class="row g-4">
+      {% set features = [
+        ('🔑', 'Password Hashing', 'Passwords are salted and hashed with Werkzeug. Plaintext passwords are never stored.'),
+        ('🛡️', 'SQL Injection Defence', 'Every database query is parameterized, so user input can never change the SQL.'),
+        ('🧹', 'Input Validation', 'All fields are validated on the server for format, length and allowed characters.'),
+        ('🚫', 'XSS Protection', 'Jinja2 autoescaping and a strict Content-Security-Policy block script injection.'),
+        ('🎟️', 'CSRF Tokens', 'Every form carries a Flask-WTF token so other websites cannot forge requests.'),
+        ('🍪', 'Secure Sessions', 'HttpOnly, SameSite and (on HTTPS) Secure cookies protect login sessions.'),
+        ('⏱️', 'Brute-Force Limits', 'Repeated failed logins temporarily lock the attempt, slowing password guessing.'),
+        ('👤', 'Role-Based Access', 'Admin pages are restricted to administrators created through a secure CLI command.'),
+        ('📲', 'Two-Factor Authentication', 'Optional TOTP authentication adds a second factor after the password step.'),
+        ('📋', 'Security Audit Trail', 'Administrators can review security events and export recent audit records.'),
+        ('🔁', 'Secure Password Reset', 'Single-use, expiring reset tokens are sent by email when SMTP is configured.')
+      ] %}
+      {% for icon, title, text in features %}
+      <div class="col-md-6 col-lg-3">
+        <div class="card feature-card h-100">
+          <div class="card-body">
+            <div class="feature-icon">{{ icon }}</div>
+            <h3 class="h5 fw-bold">{{ title }}</h3>
+            <p class="mb-0 text-muted">{{ text }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="about" class="py-5 about-section">
+  <div class="container">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-6">
+        <h2 class="section-title">About the Project</h2>
+        <p>
+          SecurePortal is a practical for the <strong>Secure Coding</strong> subject. It lets students
+          register, log in, view their profile and manage their details, while administrators can search
+          and manage student records.
+        </p>
+        <p class="mb-0">
+          The goal is not just a working application but a demonstration of <em>why</em> each protection
+          exists. The README includes a security test plan you can run against this local application.
+        </p>
+      </div>
+      <div class="col-lg-6">
+        <div class="card about-card">
+          <div class="card-body">
+            <h3 class="h5 fw-bold mb-3">Tech Stack</h3>
+            <ul class="list-unstyled mb-0 tech-list">
+              <li><strong>Frontend:</strong> HTML5, CSS3, Bootstrap 5, JavaScript</li>
+              <li><strong>Backend:</strong> Python, Flask</li>
+              <li><strong>Database:</strong> SQLite</li>
+              <li><strong>Security:</strong> Werkzeug hashing, Flask-WTF CSRF</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

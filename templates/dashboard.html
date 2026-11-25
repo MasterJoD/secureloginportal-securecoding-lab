@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="page-header">
+  <div class="container">
+    <h1 class="h2 fw-bold mb-1">Welcome, {{ user['full_name'] }}!</h1>
+    <p class="mb-0 opacity-75">This is your personal student dashboard.</p>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="card dash-card h-100">
+          <div class="card-body p-4">
+            <h2 class="h5 fw-bold mb-3">Account Information</h2>
+            <dl class="row mb-0 info-list">
+              <dt class="col-sm-4">Student Name</dt><dd class="col-sm-8">{{ user['full_name'] }}</dd>
+              <dt class="col-sm-4">Student ID</dt><dd class="col-sm-8">{{ user['student_id'] }}</dd>
+              <dt class="col-sm-4">Email</dt><dd class="col-sm-8">{{ user['email'] }}</dd>
+              <dt class="col-sm-4">Phone</dt><dd class="col-sm-8">{{ user['phone'] }}</dd>
+              <dt class="col-sm-4">Account Type</dt><dd class="col-sm-8 text-capitalize">{{ user['role'] }}</dd>
+              <dt class="col-sm-4">Member Since</dt><dd class="col-sm-8">{{ user['created_at'] }} UTC</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card dash-card h-100">
+          <div class="card-body p-4">
+            <h2 class="h5 fw-bold mb-3">Profile</h2>
+            <form method="post" action="{{ url_for('update_profile') }}" novalidate>
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <div class="mb-3">
+                <label for="full_name" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="full_name" name="full_name" maxlength="100"
+                       value="{{ user['full_name'] }}" required>
+              </div>
+              <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" name="phone" maxlength="20"
+                       value="{{ user['phone'] }}" required>
+              </div>
+              <p class="small text-muted">Email and Student ID cannot be changed here.</p>
+              <button type="submit" class="btn btn-primary rounded-pill px-4">Save changes</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 d-flex flex-wrap gap-2">
+      <a href="{{ url_for('security_settings') }}" class="btn btn-outline-primary rounded-pill px-4">Account security &amp; 2FA</a>
+      <form method="post" action="{{ url_for('logout') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn btn-outline-danger rounded-pill px-4">Logout</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
